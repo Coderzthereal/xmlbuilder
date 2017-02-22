@@ -76,5 +76,3 @@ class XMLBuilder
 	alias :to_str :str
 	alias :inspect :str
 end
-require 'irb'
-IRB.start
