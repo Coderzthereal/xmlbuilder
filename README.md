@@ -14,18 +14,18 @@ xml.document :type => 'xml', :use => 'example' do |document|
   xml.add "I hope that this has been a good example."
 end
 p xml.str
-<document type="xml" use="example">
-<description>
-This is an example of using XMLBuilder.
-</description>
-<nextmeeting date="2017-02-10 21:56:56 -0800">
-<agenda>
-Nothing of importance will be decided.
-</agenda>
-<clearance level="classified" />
-</nextmeeting>
-I hope that this has been a good example.
-</document>
+# <document type="xml" use="example">
+# <description>
+# This is an example of using XMLBuilder.
+# </description>
+# <nextmeeting date="2017-02-10 21:56:56 -0800">
+# <agenda>
+# Nothing of importance will be decided.
+# </agenda>
+# <clearance level="classified" />
+# </nextmeeting>
+# I hope that this has been a good example.
+# </document>
 ```
 **NOTE:** This doesn't support indenting.
 [Here](https://rubygems.org/gems/xmlbuilder) is the gem repo.
