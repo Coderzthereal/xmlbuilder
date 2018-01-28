@@ -9,7 +9,7 @@ xml.document :type => 'xml', :use => 'example' do |document|
   document.description { |desc| desc.add "This is an example of using XMLBuilder.\n" }
   document.nextmeeting :date => Time.now+100000 do |meeting|
     meeting.agenda { |agenda| agenda.add "Nothing of importance will be decided.\n" }
-    meeting.clearance true, :level => :classified # Passing true in as the first parameter will cause it to be a tag with no closing tag.
+    meeting.clearance true, :level => :classified # Passing true in as the first parameter will cause it to be a standalone tag.
   end
   xml.add "I hope that this has been a good example."
 end
@@ -27,7 +27,7 @@ p xml.str
 # I hope that this has been a good example.
 # </document>
 ```
-**NOTE:** This doesn't support indenting.
+**NOTE:** XMLBuilder doesn't indent its output.
 [Here](https://rubygems.org/gems/xmlbuilder) is the gem repo.
 
 ## Installation
