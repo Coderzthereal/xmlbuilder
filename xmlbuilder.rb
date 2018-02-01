@@ -1,11 +1,11 @@
 # XMLBuilder is a class that allows you to easily create XML.
 # Here's an example:
 #   xml = XMLBuilder.new
-#   xml.document :type => 'xml', :use => 'example' do |document|
-#     document.description { |desc| desc.add "This is an example of using XMLBuilder.\n" }
-#     document.nextmeeting :date => Time.now+100000 do |meeting|
-#       meeting.agenda { |agenda| agenda.add "Nothing of importance will be decided.\n" }
-#       meeting.clearance true, :level => :classified # Passing true in as the first parameter will cause it to be a tag with no closing tag.
+#   xml.document :type => 'xml', :use => 'example' do
+#     xml.description "This is an example of using XMLBuilder.\n" # If you pass in a string, it will automatically input it into
+#     xml.nextmeeting :date => Time.now+100000 do       # the output string. You can't use a block with it, though.
+#       xml.agenda "Nothing of importance will be decided.\n"
+#       xml.clearance true, :level => :classified # Passing true in as the first parameter will cause it to be a standalone tag.
 #     end
 #     xml.add "I hope that this has been a good example."
 #   end
@@ -36,17 +36,27 @@ class XMLBuilder
 	def add(str)
 		@str << str
 	end
+	def to_ary
+		return [@str]
+	end
 	# #method_missing is the brains of the operation. It takes the name of the tag to add,
-	# an optional boolean parameter which signifies whether to make it a single tag or not,
-	# any options to put in the tag, and a block to evaluate between the opening and closing tags.
-	# There is an alias, #add_element, which is used for already defined methods such as #send and 
-	# #method_missing..
+	# an optional string to put in the tag, an optional boolean parameter which signifies whether 
+	# to make it a single tag or not, any options to put in the tag, and a block to evaluate between
+	# the opening and closing tags. There is an alias, #add_element, which is used for already defined
+	# methods such as #send and #method_missing.
 	def method_missing(name, *args, &block)
+		internal = nil
 		if args.length == 2
-			one_tag, hash = *args
+			if args[0].is_a? String
+				one_tag, internal, hash = false, *args
+			else
+				one_tag, hash = *args
+			end
 		elsif args.length == 1
 			if args[0].is_a? Hash
 				one_tag, hash = *[false, args[0]]
+			elsif args[0].is_a? String
+				one_tag, internal, hash = false, args[0], {}
 			else
 				one_tag, hash = *[args[0], {}]
 			end
@@ -64,8 +74,10 @@ class XMLBuilder
 				@str << " #{k}=\"#{v}\""
 			end
 			@str << ">\n"
-			if block
-				block.call(self)
+			if !internal.nil?
+				@str << internal.to_str + "\n"
+			elsif block
+				block.call
 			end
 			@str << "</#{name}>\n"
 		end
