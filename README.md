@@ -9,7 +9,7 @@ This is a basic example:
 #   xml = XMLBuilder.new
 #   xml.document :type => 'xml', :use => 'example' do
 #     xml.description "This is an example of using XMLBuilder.\n" # If you pass in a string, it will automatically input it into
-#     xml.nextmeeting :date => Time.now+100000 do       # the output string. You can't use a block with it, though.
+#     xml.nextmeeting :date => Time.now+100000 do                 # the output string. You can't use a block with it, though.
 #       xml.agenda "Nothing of importance will be decided.\n"
 #       xml.clearance true, :level => :classified # Passing true in as the first parameter will cause it to be a standalone tag.
 #     end
