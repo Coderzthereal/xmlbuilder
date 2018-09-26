@@ -1,3 +1,8 @@
+# THERE IS AN UPDATE COMING SOON
+It will have things like cleaner code, better comments, and indentation in the output.
+
+
+
 # xmlbuilder: A simple way to build XML
 This library is very short. All it does is allow you to write XML in a very Ruby-ish way.
 
