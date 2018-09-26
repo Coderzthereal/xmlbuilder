@@ -29,7 +29,7 @@ This is a basic example:
 #   I hope that this has been a good example.
 #   </document>
 ```
-**NOTE:** XMLBuilder doesn't indent its output.
+**NOTE:** XMLBuilder does **not** indent its output.
 [Here](https://rubygems.org/gems/xmlbuilder) is the gem repo.
 
 ## Installation
