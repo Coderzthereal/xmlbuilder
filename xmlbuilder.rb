@@ -1,4 +1,4 @@
-# XMLBuilder is a class that allows you to easily create XML.
+# XMLBuilder is a library that allows you to easily create XML.
 # Here's an example:
 #   xml = XMLBuilder.new
 #   xml.document :type => 'xml', :use => 'example' do
@@ -24,9 +24,11 @@
 #   </document>
 class XMLBuilder
 	attr_reader :str
-	# #initialize simply sets the string to "".
-	def initialize
+	# #initialize simply sets the stored string to "" and the depth (used in nesting tags) to 0.
+	def initialize(separator="  ") # separator set to two spaces by default, used in nesting
 		@str = ""
+		@depth = 0
+		@separator = separator
 	end
 	# #clear does the same thing as #initialize (by delegating to it).
 	def clear
@@ -45,7 +47,7 @@ class XMLBuilder
 	# the opening and closing tags. There is an alias, #add_element, which is used for already defined
 	# methods such as #send and #method_missing.
 	def method_missing(name, *args, &block)
-		internal = nil
+		internal = nil # Internal is a string that is put between the sides of the element
 		if args.length == 2
 			if args[0].is_a? String
 				one_tag, internal, hash = false, *args
@@ -63,6 +65,7 @@ class XMLBuilder
 		else
 			one_tag, hash = false, {}
 		end
+		@str << @separator.to_s * @depth
 		@str << "<#{name}"
 		if one_tag
 			hash.each do |k, v|
@@ -77,8 +80,11 @@ class XMLBuilder
 			if !internal.nil?
 				@str << internal.to_str + "\n"
 			elsif block
+				@depth += 1
 				block.call
+				@depth -= 1
 			end
+			@str << @separator * @depth
 			@str << "</#{name}>\n"
 		end
 		return @str
@@ -87,4 +93,5 @@ class XMLBuilder
 	alias :to_s :str
 	alias :to_str :str
 	alias :inspect :str
+	public :add_element
 end
