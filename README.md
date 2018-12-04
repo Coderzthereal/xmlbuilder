@@ -1,6 +1,9 @@
-# THERE IS AN UPDATE COMING SOON
-It will have things like cleaner code, better comments, and indentation in the output.
+# NOTE
+## Update coming soon
+It will have cleaner code, better comments, and indentation in the output.
 
+## This is not the original XmlBuilder library.
+It is a separate library that uses a different interface. I did not write the original XmlBuilder gem, and it was taken down from rubygems.org awhile ago.
 
 
 # xmlbuilder: A simple way to build XML
