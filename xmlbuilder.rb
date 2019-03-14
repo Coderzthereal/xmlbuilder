@@ -78,7 +78,7 @@ class XMLBuilder
 			end
 			@str << ">\n"
 			if !internal.nil?
-				@str << internal.to_str + "\n"
+				@str << (@separator*@depth + internal.to_str + "\n")
 			elsif block
 				@depth += 1
 				block.call
