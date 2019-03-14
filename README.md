@@ -3,7 +3,7 @@ It is a separate library that uses a different interface. I did not write the or
 
 
 # xmlbuilder: A simple way to build XML
-This library is very short. All it does is allow you to write XML in a very Ruby-ish way.
+This library is very short. All it does is allow you to write XML in a very Ruby-ish way. **The gem is not up to date right now.**
 
 ## Examples:
 This is a basic example:
