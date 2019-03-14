@@ -1,7 +1,3 @@
-# NOTE
-## Update coming soon
-It will have cleaner code, better comments, and indentation in the output.
-
 ## This is not the original XmlBuilder library.
 It is a separate library that uses a different interface. I did not write the original XmlBuilder gem, and it was taken down from rubygems.org awhile ago.
 
@@ -25,19 +21,19 @@ This is a basic example:
 #   end
 #   p xml.str
 #   <document type="xml" use="example">
-#   <description>
-#   This is an example of using XMLBuilder.
-#   </description>
-#   <nextmeeting date="2017-02-10 21:56:56 -0800">
-#   <agenda>
-#   Nothing of importance will be decided.
-#   </agenda>
-#   <clearance level="classified" />
-#   </nextmeeting>
-#   I hope that this has been a good example.
+#     <description>
+#       This is an example of using XMLBuilder.
+#     </description>
+#     <nextmeeting date="2017-02-10 21:56:56 -0800">
+#       <agenda>
+#         Nothing of importance will be decided.
+#       </agenda>
+#       <clearance level="classified" />
+#     </nextmeeting>
+#     I hope that this has been a good example.
 #   </document>
 ```
-**NOTE:** XMLBuilder does **not** indent its output.
+**NOTE: XMLBuilder now indents its output.**
 [Here](https://rubygems.org/gems/xmlbuilder) is the gem repo.
 
 ## Installation
