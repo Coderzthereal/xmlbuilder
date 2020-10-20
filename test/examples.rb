@@ -1,4 +1,4 @@
-require_relative '../xmlbuilder'
+require_relative '../lib/xmlbuilder'
 
 # This test file contains various HTML snippets and fragments
 # in order to "stress-test" the library. Also I can't think of

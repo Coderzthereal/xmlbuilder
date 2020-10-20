@@ -1,4 +1,4 @@
-require_relative '../xmlbuilder'
+require_relative '../lib/xmlbuilder'
 
 class XMLBuilderTagTest < Minitest::Test
   def setup
