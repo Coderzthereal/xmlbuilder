@@ -5,11 +5,6 @@
 # Written by Coderzthereal
 # 
 
-#this part is super hacky, i'm just trying to pass my own tests before i rewrite this entire thing
-module Boolean; end
-class TrueClass; include Boolean; end
-class FalseClass; include Boolean; end
-
 
 class XMLBuilder
   @@default_separator = "  "
@@ -43,21 +38,21 @@ class XMLBuilder
     add indentation, ?<, name
     attrs.each do |attr, value|
       add " #{attr}=\"#{value}\""
-    end unless attrs.empty?
+    end
     if one_tag
       add " />\n"
       return self
     else
       add ?>
     end
-    @depth += 1
     if internal
       add internal
     elsif block_given?
+      @depth += 1
       add "\n"
       yield
+      @depth -= 1
     end
-    @depth -= 1
     add indentation unless internal
     add "</#{name}>\n"
     return self
@@ -70,16 +65,16 @@ class XMLBuilder
     #  </name>
     
 		internal = nil
-		if args.length == 2
-      if args[0].is_a? Boolean
+		if args.size == 2
+      if args[0] == !!args[0]
         one_tag, hash = *args
       else
         one_tag, internal, hash = false, *args
 			end
-		elsif args.length == 1
+		elsif args.size == 1
 			if args[0].is_a? Hash
 				one_tag, hash = *[false, args[0]]
-			elsif args[0].is_a? Boolean
+			elsif args[0] == !!args[0]
 				one_tag, hash = args[0], {}
 			else
 				one_tag, internal, hash = false, args[0].to_s, {}
