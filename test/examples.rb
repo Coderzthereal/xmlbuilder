@@ -10,17 +10,11 @@ $actual = [] # array of procs
 $expected << <<-end
 <html>
   <head>
-    <title>
-      Page Title
-    </title>
+    <title>Page Title</title>
   </head>
   <body>
-    <h1>
-      My First Heading
-    </h1>
-    <p>
-      My first paragraph.
-    </p>
+    <h1>My First Heading</h1>
+    <p>My first paragraph.</p>
   </body>
 </html>
 end
@@ -39,18 +33,10 @@ end
 
 $expected << <<-end
 <note>
-  <to>
-    Dave
-  </to>
-  <from>
-    The Empress of Death
-  </from>
-  <heading>
-    Reminder
-  </heading>
-  <body>
-    Don't forget me this weekend!
-  </body>
+  <to>Dave</to>
+  <from>The Empress of Death</from>
+  <heading>Reminder</heading>
+  <body>Don't forget me this weekend!</body>
 </note>
 end
 
@@ -66,32 +52,16 @@ end
 $expected << <<-end
 <bookstore>
   <book category="COOKING">
-    <title lang="en">
-      Everyday Italian
-    </title>
-    <author>
-      Giada De Laurentiis
-    </author>
-    <year>
-      2005
-    </year>
-    <price>
-      30.00
-    </price>
+    <title lang="en">Everyday Italian</title>
+    <author>Giada De Laurentiis</author>
+    <year>2005</year>
+    <price>30.00</price>
   </book>
   <book category="CHILDREN">
-    <title lang="en">
-      Harry Potter
-    </title>
-    <author>
-      J K. Rowling
-    </author>
-    <year>
-      2005
-    </year>
-    <price>
-      29.99
-    </price>
+    <title lang="en">Harry Potter</title>
+    <author>J K. Rowling</author>
+    <year>2005</year>
+    <price>29.99</price>
   </book>
 </bookstore>
 end

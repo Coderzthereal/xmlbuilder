@@ -21,7 +21,7 @@ class XMLBuilderTagTest < Minitest::Test
     @test_obj.add_element 'test', true, num: 37
     assert_equal '<test num="37" />', @test_obj.to_s.chomp
     @test_obj.clear.add_element 'test', 54
-    assert_equal "<test>\n  54\n</test>", @test_obj.to_s.chomp
+    assert_equal "<test>54</test>", @test_obj.to_s.chomp
   end
 
   # May move to 'test/examples.rb'
@@ -29,14 +29,10 @@ class XMLBuilderTagTest < Minitest::Test
     expected = <<~end
     <html>
       <head>
-        <title>
-          Test Title
-        </title>
+        <title>Test Title</title>
       </head>
       <body>
-        <p class="content">
-          This is a piece of test content.
-        </p>
+        <p class="content">This is a piece of test content.</p>
         <br />
       </body>
     </html>

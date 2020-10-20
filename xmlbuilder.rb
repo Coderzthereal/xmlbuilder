@@ -2,7 +2,7 @@
 # 
 # Licensed under CC-BY-NC-SA 4.0
 # 
-# Written by [redacted]
+# Written by Coderzthereal
 # 
 
 #this part is super hacky, i'm just trying to pass my own tests before i rewrite this entire thing
@@ -12,28 +12,64 @@ class FalseClass; include Boolean; end
 
 
 class XMLBuilder
-	attr_reader :str
-	# Sets the stored string to "" and the depth (used in nesting tags) to 0.
-	def initialize(separator="  ") # separator set to two spaces by default, used in nesting
+  @@default_separator = "  "
+  # separator set to two spaces by default, used in nesting
+
+  attr_reader :str
+  attr_accessor :separator
+  
+	def initialize(separator=@@default_separator)
 		@str = ""
 		@depth = 0
 		@separator = separator
-	end
-	# #clear does the same thing as #initialize (by delegating to it).
+  end
+  
+	# Sets the stored string to "" and the depth to 0.
 	def clear
-    initialize
+    initialize(@separator)
     self
-	end
+  end
+  
 	# Adds a string (with no preprocessing) to the object's string.
-	def add(str)
-		@str << str
-	end
-	def to_ary
-		return [@str]
-	end
-	# Takes the name of the tag to add, an optional string to put in the tag, an optional boolean parameter which signifies whether to make it a single tag or not, any options to put in the tag, and a block to evaluate between the opening and closing tags. There is an alias, #add_element, which is used for already defined methods such as #send and #method_missing.
-	def method_missing(name, *args, &block)
-		internal = nil # Internal is a string that is put between the sides of the element
+	def add(*strs)
+		@str << strs.flatten.join('')
+  end
+  
+	# Takes the name of the tag to add, an optional string to put in the tag, an optional boolean parameter which signifies whether to make it a single tag or not, any options to put in the tag, and a block to evaluate between the opening and closing tags. Aliased to #method_missing to allow dynamic tag creation.
+  def add_element(name, *args)
+    one_tag, internal, attrs = process_args args
+    
+    # logic time
+    add indentation, ?<, name
+    attrs.each do |attr, value|
+      add " #{attr}=\"#{value}\""
+    end unless attrs.empty?
+    if one_tag
+      add " />\n"
+      return self
+    else
+      add ?>
+    end
+    @depth += 1
+    if internal
+      add internal
+    elsif block_given?
+      add "\n"
+      yield
+    end
+    @depth -= 1
+    add indentation unless internal
+    add "</#{name}>\n"
+    return self
+  end
+
+  def process_args(args)
+    # Argument cheat sheet:
+    #  <name hash[0]="hash[1]">
+    #    internal
+    #  </name>
+    
+		internal = nil
 		if args.length == 2
       if args[0].is_a? Boolean
         one_tag, hash = *args
@@ -50,37 +86,14 @@ class XMLBuilder
 			end
 		else
 			one_tag, hash = false, {}
-		end
-		@str << @separator.to_s * @depth
-		@str << "<#{name}"
-		if one_tag
-			hash.each do |k, v|
-				@str << " #{k}=\"#{v}\""
-			end
-			@str << " />\n"
-		else
-			hash.each do |k, v|
-				@str << " #{k}=\"#{v}\""
-			end
-      @str << ">"
-      @str << ?\n if (block or internal)
-      if !internal.nil?
-        @depth += 1
-        @str << (@separator*@depth + internal.to_str + "\n")
-        @depth -= 1
-			elsif block
-				@depth += 1
-				block.call
-				@depth -= 1
-			end
-			@str << @separator * @depth
-			@str << "</#{name}>\n"
-		end
-		return @str
-	end
-	alias :add_element :method_missing
+    end
+    return one_tag, internal, hash
+  end
+  def indentation; @separator * @depth; end
+	alias :method_missing :add_element
 	alias :to_s :str
 	alias :to_str :str
-	alias :inspect :str
+  alias :inspect :str
+  private :process_args, :indentation
 	public :add_element
 end
