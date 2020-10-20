@@ -1,30 +1,19 @@
 # XMLBuilder is a library that allows you to easily create XML.
-# Here's an example:
-#   xml = XMLBuilder.new
-#   xml.document :type => 'xml', :use => 'example' do
-#     xml.description "This is an example of using XMLBuilder.\n" # If you pass in a string, it will automatically input it into
-#     xml.nextmeeting :date => Time.now+100000 do       # the output string. You can't use a block with it, though.
-#       xml.agenda "Nothing of importance will be decided.\n"
-#       xml.clearance true, :level => :classified # Passing true in as the first parameter will cause it to be a standalone tag.
-#     end
-#     xml.add "I hope that this has been a good example."
-#   end
-#   p xml.str
-#   <document type="xml" use="example">
-#   <description>
-#   This is an example of using XMLBuilder.
-#   </description>
-#   <nextmeeting date="2017-02-10 21:56:56 -0800">
-#   <agenda>
-#   Nothing of importance will be decided.
-#   </agenda>
-#   <clearance level="classified" />
-#   </nextmeeting>
-#   I hope that this has been a good example.
-#   </document>
+# 
+# Licensed under CC-BY-NC-SA 4.0
+# 
+# Written by [redacted]
+# 
+
+#this part is super hacky, i'm just trying to pass my own tests before i rewrite this entire thing
+module Boolean; end
+class TrueClass; include Boolean; end
+class FalseClass; include Boolean; end
+
+
 class XMLBuilder
 	attr_reader :str
-	# #initialize simply sets the stored string to "" and the depth (used in nesting tags) to 0.
+	# Sets the stored string to "" and the depth (used in nesting tags) to 0.
 	def initialize(separator="  ") # separator set to two spaces by default, used in nesting
 		@str = ""
 		@depth = 0
@@ -32,35 +21,32 @@ class XMLBuilder
 	end
 	# #clear does the same thing as #initialize (by delegating to it).
 	def clear
-		initialize # That's essentially what it does.
+    initialize
+    self
 	end
-	# #add adds a string (with no processing) to the object's string.
+	# Adds a string (with no preprocessing) to the object's string.
 	def add(str)
 		@str << str
 	end
 	def to_ary
 		return [@str]
 	end
-	# #method_missing is the brains of the operation. It takes the name of the tag to add,
-	# an optional string to put in the tag, an optional boolean parameter which signifies whether 
-	# to make it a single tag or not, any options to put in the tag, and a block to evaluate between
-	# the opening and closing tags. There is an alias, #add_element, which is used for already defined
-	# methods such as #send and #method_missing.
+	# Takes the name of the tag to add, an optional string to put in the tag, an optional boolean parameter which signifies whether to make it a single tag or not, any options to put in the tag, and a block to evaluate between the opening and closing tags. There is an alias, #add_element, which is used for already defined methods such as #send and #method_missing.
 	def method_missing(name, *args, &block)
 		internal = nil # Internal is a string that is put between the sides of the element
 		if args.length == 2
-			if args[0].is_a? String
-				one_tag, internal, hash = false, *args
-			else
-				one_tag, hash = *args
+      if args[0].is_a? Boolean
+        one_tag, hash = *args
+      else
+        one_tag, internal, hash = false, *args
 			end
 		elsif args.length == 1
 			if args[0].is_a? Hash
 				one_tag, hash = *[false, args[0]]
-			elsif args[0].is_a? String
-				one_tag, internal, hash = false, args[0], {}
+			elsif args[0].is_a? Boolean
+				one_tag, hash = args[0], {}
 			else
-				one_tag, hash = *[args[0], {}]
+				one_tag, internal, hash = false, args[0].to_s, {}
 			end
 		else
 			one_tag, hash = false, {}
@@ -76,9 +62,12 @@ class XMLBuilder
 			hash.each do |k, v|
 				@str << " #{k}=\"#{v}\""
 			end
-			@str << ">\n"
-			if !internal.nil?
-				@str << (@separator*@depth + internal.to_str + "\n")
+      @str << ">"
+      @str << ?\n if (block or internal)
+      if !internal.nil?
+        @depth += 1
+        @str << (@separator*@depth + internal.to_str + "\n")
+        @depth -= 1
 			elsif block
 				@depth += 1
 				block.call
