@@ -22,13 +22,9 @@ p xml.str
 
 # =>
 <document type="xml" use="example">
-  <description>
-    This is an example of using XMLBuilder.
-  </description>
+  <description>This is an example of using XMLBuilder.</description>
   <nextmeeting date="2017-02-10 21:56:56 -0800">
-    <agenda>
-      Nothing of importance will be decided.
-    </agenda>
+    <agenda>Nothing of importance will be decided.</agenda>
     <clearance level="classified" />
   </nextmeeting>
 </document>
@@ -66,18 +62,10 @@ p output
 # =>
 <collection genre="fantasy">
   <book>
-    <title>
-      Assassin's Apprentice
-    </title>
-    <author>
-      Robin Hobb
-    </author>
-    <published>
-      1995
-    </published>
-    <rating>
-      4.5
-    </rating>
+    <title>Assassin's Apprentice</title>
+    <author>Robin Hobb</author>
+    <published>1995</published>
+    <rating>4.5</rating>
   </book>
   ...
 </collection>
