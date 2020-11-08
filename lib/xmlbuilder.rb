@@ -37,21 +37,21 @@ class XMLBuilder
 	  # logic time
 	  add indentation, ?<, name
 	  attrs.each do |attr, value|
-		add " #{attr}=\"#{value}\""
+      add " #{attr}=\"#{value}\""
 	  end
 	  if one_tag
-		add " />\n"
-		return self
+      add " />\n"
+      return self
 	  else
-		add ?>
+      add ?>
 	  end
 	  if internal
-		add internal
+      add internal
 	  elsif block_given?
-		@depth += 1
-		add "\n"
-		yield
-		@depth -= 1
+      @depth += 1
+      add "\n"
+      yield
+      @depth -= 1
 	  end
 	  add indentation unless internal
 	  add "</#{name}>\n"
@@ -84,6 +84,7 @@ class XMLBuilder
     end
     return one_tag, internal, hash
   end
+  
   def indentation; @separator * @depth; end
   alias :method_missing :add_element
   alias :to_s :str
