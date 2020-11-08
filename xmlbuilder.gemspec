@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "xmlbuilder"
-  s.version = "0.4.1"
+  s.version = "0.4.2"
   s.authors = ["Coderz"]
   s.files = Dir["./lib/xmlbuilder.rb"] + Dir["./test/*.rb"] + Dir["README.md"] + Dir["LICENSE"]
   s.summary = "An idiomatic library allowing you to generate XML"

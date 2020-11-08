@@ -1,2 +1,0 @@
-language = "bash"
-run = "ruby ./test/all.rb"
