@@ -1,6 +1,6 @@
 # XMLBuilder is a library that allows you to easily create XML.
 # 
-# Licensed under CC-BY-NC-SA-4.0
+# Licensed under MIT
 # 
 # Written by Coderz
 # 
@@ -92,12 +92,3 @@ class XMLBuilder
   private :process_args, :indentation
   public :add_element
 end
-
-# 
-# This work is licensed under the Creative Commons
-# Attribution-NonCommercial-ShareAlike 4.0 International License.
-# To view a copy of this license, visit 
-# http://creativecommons.org/licenses/by-nc-sa/4.0/ or
-# send a letter to
-# Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
-# 
