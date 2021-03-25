@@ -1,5 +1,5 @@
 ## This is not the original XmlBuilder library.
-It is a separate library that uses a different interface. I did not write the original XmlBuilder gem, whose owner yanked it from rubygems.org in 2012.
+It is a separate library that uses a different interface. I did not write the original XmlBuilder gem, which was yanked from rubygems.org in 2012.
 
 
 # xmlbuilder: A simple way to build XML
